@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game of Life</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Game of Life</h1>
+            <p>An implementation of <a href="http://en.wikipedia.org/wiki/John_Horton_Conway" target="_blank">John Conway's</a> <a href="http://en.wikipedia.org/wiki/Conway_game_of_life" target="_blank">Game of Life</a> using javascript and canvas.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 js-canvas-container">
+                <canvas id="gameoflife_canvas" class="game__canvas js-game-canvas">
+                    <p class="notification text-danger">
+                        <span class="notification__icon glyphicon glyphicon-warning-sign"></span>
+                        Sorry, your browser cannot display this content. Try updating your browser or <a href="http://web-browsers.findthebest.com/" target="_blank">use a different browser</a>. You could also try to play the game on <a href="http://www.bitstorm.org/gameoflife/" target="_blank">www.bitstorm.org/gameoflife/</a> if you have Java installed.
+                    </p>
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="container controls">
+        <div class="row">
+            <div class="col-xs-7">
+                <button class="btn btn-primary controls__button js-button-start" role="button">
+                    <span class="glyphicon glyphicon-play"></span> Start
+                </button>
+                <button class="btn btn-primary controls__button js-button-stop" role="button">
+                    <span class="glyphicon glyphicon-stop"></span> Stop
+                </button>
+                <button class="btn btn-primary controls__button js-button-step" role="button">
+                    <span class="glyphicon glyphicon-step-forward"></span> Step
+                </button>
+                <button class="btn btn-primary controls__button js-button-reset" role="button">
+                    <span class="glyphicon glyphicon-remove"></span> Reset
+                </button>
+            </div>
+            <div class="col-xs-5 output">
+                <p><span class="js-num-generations">Generation 0: 0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+    <script src="src/gameoflife.js"></script>
+</body>
+</html>
