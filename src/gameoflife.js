@@ -1,3 +1,10 @@
+/*
+ * GameOfLife JavaScript Plugin v1.0.0
+ * https://github.com/barryvanveen/gameoflife
+ *
+ * Released under the MIT license
+ * http://choosealicense.com/licenses/mit/
+ */
 GameOfLife = {};
 
 GameOfLife.defaults = {
@@ -139,10 +146,20 @@ GameOfLife._initEventListeners = function() {
 
     var self = this;
 
-    // todo: fallback for <=IE10 with attachEvent (https://msdn.microsoft.com/en-us/library/ms536343%28VS.85%29.aspx)
-    this.canvas.addEventListener('click', function(e) {
-        self._handleClick(e);
-    }, false);
+    // todo: test fallback for <=IE10 with attachEvent
+    // https://msdn.microsoft.com/en-us/library/ms536343%28VS.85%29.aspx
+    if (document.addEventListener) {
+
+        this.canvas.addEventListener('click', function(e) {
+            self._handleClick(e);
+        }, false);
+
+    } else if (document.attachEvent) {
+
+        this.canvas.attachEvent('click', function (e) {
+            self._handleClick(e);
+        });
+    }
 
 };
 

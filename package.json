@@ -1,0 +1,38 @@
+{
+  "name": "gameoflife",
+  "version": "1.0.0",
+  "description": "Conway's Game of Life Javscript plugin",
+  "main": "dist/gameoflife.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barryvanveen/gameoflife.git"
+  },
+  "keywords": [
+    "conway",
+    "game",
+    "of",
+    "life",
+    "plugin"
+  ],
+  "author": {
+    "name": "Barry van Veen",
+    "email": "barryvanveen@gmail.com",
+    "url": "https://barryvanveen.nl"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/barryvanveen/gameoflife/issues"
+  },
+  "homepage": "https://github.com/barryvanveen/gameoflife#readme",
+  "devDependencies": {
+    "gulp": "3.9.*",
+    "gulp-concat": "2.6.*",
+    "gulp-plumber": "1.0.*",
+    "gulp-rename": "1.2.*",
+    "gulp-sourcemaps": "1.6.*",
+    "gulp-uglify": "1.5.*"
+  }
+}
