@@ -116,23 +116,22 @@ GameOfLife._initCells = function() {
     //   cells is the current state
     //   newCells is used to compute the next state
 
-    var i,j;
+    var col = this.config.num_cols,
+        row;
 
     this.cells = [];
     this.newCells = [];
 
-    // todo: optimize for-loops
-    for (i = 0; i < this.config.num_cols; i++) {
-        this.cells[i] = [];
-        this.newCells[i] = [];
+    while (col--) {
+        this.cells[col] = [];
+        this.newCells[col] = [];
 
-        for (j = 0; j < this.config.num_rows; j++) {
-            this.cells[i][j] = 0;
-            this.newCells[i][j] = 0;
+        row = this.config.num_rows;
+        while (row--) {
+            this.cells[col][row] = 0;
+            this.newCells[col][row] = 0;
         }
     }
-
-    // todo: isn't "this.newCells = this.cells" faster?
 
 };
 
@@ -140,7 +139,7 @@ GameOfLife._initEventListeners = function() {
 
     var self = this;
 
-    // todo: fallback for <=IE10 with attachEvent
+    // todo: fallback for <=IE10 with attachEvent (https://msdn.microsoft.com/en-us/library/ms536343%28VS.85%29.aspx)
     this.canvas.addEventListener('click', function(e) {
         self._handleClick(e);
     }, false);
@@ -239,39 +238,39 @@ GameOfLife.stop = function() {
 
 GameOfLife._computeNextGeneration = function() {
 
-    var row, col, rowOffset, colOffset, neighborCol, neighborRow,
-        count = 0,
-        change = false;
+    var count = 0,
+        change = false,
+        col, row, rowOffset, colOffset, neighborCol, neighborRow;
 
     // iterate over all cells
-    // todo: optimize for-loops
-    for (col = 0; col < this.config.num_cols; col++) {
-        for (row = 0; row < this.config.num_rows; row++) {
+    col = this.config.num_cols;
+    while (col--) {
+
+        row = this.config.num_rows;
+        while (row--) {
 
             count = 0;
 
             // iterate over all neighbors in Moore neighborhood with radius=1
             for (colOffset = -1; colOffset <= 1; ++colOffset) {
                 for (rowOffset = -1; rowOffset <= 1; ++rowOffset) {
-                    if (colOffset != 0 || rowOffset != 0) {
+                    if (colOffset == 0 && rowOffset == 0) {
+                        continue;
+                    }
 
-                        // compute column of neighbor, use module only if necesarry
-                        neighborCol = col + colOffset;
-                        if (neighborCol < 0 || neighborCol >= this.config.num_cols) {
-                            neighborCol = this._mod(this.config.num_cols, neighborCol);
-                        }
+                    neighborCol = col + colOffset;
+                    if (neighborCol < 0 || neighborCol >= this.config.num_cols) {
+                        neighborCol = this._mod(this.config.num_cols, neighborCol);
+                    }
 
-                        // compute row of neighbor, use module only if necesarry
-                        neighborRow = row + rowOffset;
-                        if (neighborRow < 0 || neighborRow >= this.config.num_rows) {
-                            neighborRow = this._mod(this.config.num_rows, neighborRow);
-                        }
+                    neighborRow = row + rowOffset;
+                    if (neighborRow < 0 || neighborRow >= this.config.num_rows) {
+                        neighborRow = this._mod(this.config.num_rows, neighborRow);
+                    }
 
-                        // if this neighbor has the appropriate state
-                        if (this.cells[neighborCol][neighborRow]) {
-                            count++;
-                        }
-
+                    // count neighbors that are "on" or "alive"
+                    if (this.cells[neighborCol][neighborRow]) {
+                        count++;
                     }
                 }
             }
@@ -288,19 +287,23 @@ GameOfLife._computeNextGeneration = function() {
         }
     }
 
+    // todo: is keeping an array of changed cells faster?
     // update cells for new generation
-    // todo: optimize for-loops
-    for (col = 0; col < this.config.num_cols; col++) {
-        for (row = 0; row < this.config.num_rows; row++) {
+    col = this.config.num_cols;
+    while (col--) {
+
+        row = this.config.num_rows;
+        while (row--) {
 
             // only update when old and new cell differ
             if (this.cells[col][row] != this.newCells[col][row]) {
-                this.cells[col][row] = this.newCells[col][row];
+
                 // todo: is "this.cells[col][row] = !this.cells[col][row];" faster??
+                this.cells[col][row] = this.newCells[col][row];
                 this._drawCell(col, row);
                 change = true;
-            }
 
+            }
         }
     }
 
