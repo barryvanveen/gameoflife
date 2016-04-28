@@ -9,14 +9,7 @@ GameOfLife.defaults = {
     color_lines:            "#cccccc",
     color_cell_empty:       "#ffffff",
     color_cell_selected:    "#57A0DB",
-    update_interval:        200
-
-};
-
-GameOfLife.constants = {
-
-    num_cols_padding:       2,
-    num_rows_padding:       2
+    update_interval:        50
 
 };
 
@@ -123,18 +116,17 @@ GameOfLife._initCells = function() {
     //   cells is the current state
     //   newCells is used to compute the next state
 
-    var i,j,
-        cols = this.config.num_cols+this.config.num_cols_padding,
-        rows = this.config.num_rows+this.config.num_rows_padding;
+    var i,j;
 
     this.cells = [];
     this.newCells = [];
 
-    for (i = 0; i < cols; i++) {
+    // todo: optimize for-loops
+    for (i = 0; i < this.config.num_cols; i++) {
         this.cells[i] = [];
         this.newCells[i] = [];
 
-        for (j = 0; j < rows; j++) {
+        for (j = 0; j < this.config.num_rows; j++) {
             this.cells[i][j] = 0;
             this.newCells[i][j] = 0;
         }
@@ -148,6 +140,7 @@ GameOfLife._initEventListeners = function() {
 
     var self = this;
 
+    // todo: fallback for <=IE10 with attachEvent
     this.canvas.addEventListener('click', function(e) {
         self._handleClick(e);
     }, false);
@@ -157,8 +150,6 @@ GameOfLife._initEventListeners = function() {
 GameOfLife._handleClick = function(e) {
 
     var cell = this._getCellFromCursorPosition(e);
-
-    console.log(cell);
 
     if (cell == false) {
         return;
@@ -172,9 +163,7 @@ GameOfLife._handleClick = function(e) {
 
 GameOfLife._getCellFromCursorPosition = function(e) {
 
-    var left, top,
-        height = this.config.num_rows * this.config.cell_size,
-        width = this.config.num_cols * this.config.cell_size;
+    var left, top;
 
     // get coordinates of click on page
     if (typeof(e.pageX) != "undefined" && typeof(e.pageY) != "undefined") {
@@ -189,19 +178,17 @@ GameOfLife._getCellFromCursorPosition = function(e) {
     left -= this.config.canvas_offset[0];
     top -= this.config.canvas_offset[1];
 
-    if (left > width || top > height) {
+    if (left > (this.config.num_cols * this.config.cell_size) || top > (this.config.num_rows * this.config.cell_size)) {
         return false;
     }
 
     // now calculate in which cell this falls
-    // always add 1 column and 1 row because of the fixed-zero rows/cols around the edges of the grid
-    return [(Math.floor(left / this.config.cell_size) + 1), (Math.floor(top / this.config.cell_size) + 1)];
+    return [Math.floor(left / this.config.cell_size), Math.floor(top / this.config.cell_size)];
 
 };
 
 GameOfLife._drawCell = function(col, row) {
 
-    // fill with color or white, depending on de state alive/dead
     if (this.cells[col][row]) {
         this.context.fillStyle = this.config.color_cell_selected;
     } else {
@@ -210,7 +197,7 @@ GameOfLife._drawCell = function(col, row) {
 
     // fill rectangle from (col-1,row-1) with width and height of cellSize-1
     // todo: is inlining cell_size faster?
-    this.context.fillRect(1 + ((col-1)*this.config.cell_size), 1 + ((row-1)*this.config.cell_size) , this.config.cell_size-1, this.config.cell_size-1);
+    this.context.fillRect(1 + (col*this.config.cell_size), 1 + (row*this.config.cell_size) , this.config.cell_size-1, this.config.cell_size-1);
 
 };
 
@@ -230,7 +217,7 @@ GameOfLife.start = function() {
     }
 
     var self = this;
-    this.interval = setInterval(function() { self._computeNextGeneration(); }, this.update_interval);
+    this.interval = setInterval(function() { self._computeNextGeneration(); }, this.config.update_interval);
 
 };
 
@@ -252,26 +239,42 @@ GameOfLife.stop = function() {
 
 GameOfLife._computeNextGeneration = function() {
 
-    var row = 0,
+    var row, col, rowOffset, colOffset, neighborCol, neighborRow,
         count = 0,
         change = false;
 
-    // todo: implement with a toroidal array
-
-    // count number of live neighbors
+    // iterate over all cells
     // todo: optimize for-loops
-    for (var col = 1; col < this.config.num_cols+this.config.num_cols_padding-1; col++) {
-        for (row = 1; row < this.config.num_rows+this.config.num_rows_padding-1; row++) {
+    for (col = 0; col < this.config.num_cols; col++) {
+        for (row = 0; row < this.config.num_rows; row++) {
 
             count = 0;
-            if (this.cells[col-1][row-1]) count++; 	// top left
-            if (this.cells[col][row-1]) count++; 	// top
-            if (this.cells[col+1][row-1]) count++; 	// top right
-            if (this.cells[col-1][row]) count++; 	// left
-            if (this.cells[col+1][row]) count++; 	// right
-            if (this.cells[col-1][row+1]) count++; 	// bottom left
-            if (this.cells[col][row+1]) count++; 	// bottom
-            if (this.cells[col+1][row+1]) count++; 	// bottom right
+
+            // iterate over all neighbors in Moore neighborhood with radius=1
+            for (colOffset = -1; colOffset <= 1; ++colOffset) {
+                for (rowOffset = -1; rowOffset <= 1; ++rowOffset) {
+                    if (colOffset != 0 || rowOffset != 0) {
+
+                        // compute column of neighbor, use module only if necesarry
+                        neighborCol = col + colOffset;
+                        if (neighborCol < 0 || neighborCol >= this.config.num_cols) {
+                            neighborCol = this._mod(this.config.num_cols, neighborCol);
+                        }
+
+                        // compute row of neighbor, use module only if necesarry
+                        neighborRow = row + rowOffset;
+                        if (neighborRow < 0 || neighborRow >= this.config.num_rows) {
+                            neighborRow = this._mod(this.config.num_rows, neighborRow);
+                        }
+
+                        // if this neighbor has the appropriate state
+                        if (this.cells[neighborCol][neighborRow]) {
+                            count++;
+                        }
+
+                    }
+                }
+            }
 
             // determine state of new cells
             if (count < 2 || count > 3) {
@@ -287,8 +290,8 @@ GameOfLife._computeNextGeneration = function() {
 
     // update cells for new generation
     // todo: optimize for-loops
-    for (col = 1; col < this.config.num_cols+this.config.num_cols_padding-1; col++) {
-        for (row = 1; row < this.config.num_rows+this.config.num_rows_padding-1; row++) {
+    for (col = 0; col < this.config.num_cols; col++) {
+        for (row = 0; row < this.config.num_rows; row++) {
 
             // only update when old and new cell differ
             if (this.cells[col][row] != this.newCells[col][row]) {
@@ -306,4 +309,11 @@ GameOfLife._computeNextGeneration = function() {
         this.stop();
     }
 
+};
+
+/**
+ * Return a modulo that works for negative numbers (eg. -2%10=8)
+ */
+GameOfLife._mod = function(n, m) {
+    return ((m % n) + n) % n;
 };
