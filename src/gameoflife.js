@@ -5,9 +5,11 @@
  * Released under the MIT license
  * http://choosealicense.com/licenses/mit/
  */
-GameOfLife = {};
+var Barryvanveen = Barryvanveen || {};
 
-GameOfLife.defaults = {
+Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || {};
+
+Barryvanveen.GameOfLife.defaults = {
 
     canvas_id:              "gameoflife_canvas",
     num_cols:               80,
@@ -20,7 +22,7 @@ GameOfLife.defaults = {
 
 };
 
-GameOfLife.init = function(config) {
+Barryvanveen.GameOfLife.init = function(config) {
 
     this._initConfig(config);
 
@@ -34,7 +36,7 @@ GameOfLife.init = function(config) {
 
 };
 
-GameOfLife._initConfig = function(config) {
+Barryvanveen.GameOfLife._initConfig = function(config) {
 
     var i;
 
@@ -57,7 +59,7 @@ GameOfLife._initConfig = function(config) {
 
 };
 
-GameOfLife._initCanvas = function() {
+Barryvanveen.GameOfLife._initCanvas = function() {
 
     this.canvas = document.getElementById(this.config.canvas_id);
 
@@ -101,7 +103,7 @@ GameOfLife._initCanvas = function() {
 
 };
 
-GameOfLife._getPosition = function(element) {
+Barryvanveen.GameOfLife._getPosition = function(element) {
 
     var left = 0,
         top = 0;
@@ -117,7 +119,7 @@ GameOfLife._getPosition = function(element) {
 
 };
 
-GameOfLife._initCells = function() {
+Barryvanveen.GameOfLife._initCells = function() {
 
     // init two sets of cells:
     //   cells is the current state
@@ -142,7 +144,7 @@ GameOfLife._initCells = function() {
 
 };
 
-GameOfLife._initEventListeners = function() {
+Barryvanveen.GameOfLife._initEventListeners = function() {
 
     var self = this;
 
@@ -163,7 +165,7 @@ GameOfLife._initEventListeners = function() {
 
 };
 
-GameOfLife._handleClick = function(e) {
+Barryvanveen.GameOfLife._handleClick = function(e) {
 
     var cell = this._getCellFromCursorPosition(e);
 
@@ -177,7 +179,7 @@ GameOfLife._handleClick = function(e) {
 };
 
 
-GameOfLife._getCellFromCursorPosition = function(e) {
+Barryvanveen.GameOfLife._getCellFromCursorPosition = function(e) {
 
     var left, top;
 
@@ -203,7 +205,7 @@ GameOfLife._getCellFromCursorPosition = function(e) {
 
 };
 
-GameOfLife._drawCell = function(col, row) {
+Barryvanveen.GameOfLife._drawCell = function(col, row) {
 
     if (this.cells[col][row]) {
         this.context.fillStyle = this.config.color_cell_selected;
@@ -217,7 +219,7 @@ GameOfLife._drawCell = function(col, row) {
 
 };
 
-GameOfLife.reset = function() {
+Barryvanveen.GameOfLife.reset = function() {
 
     this.stop();
 
@@ -226,18 +228,19 @@ GameOfLife.reset = function() {
 
 };
 
-GameOfLife.start = function() {
+Barryvanveen.GameOfLife.start = function() {
 
     if (this.interval != null) {
         return;
     }
 
+    // todo: replace with requestAnimationFrame?
     var self = this;
     this.interval = setInterval(function() { self._computeNextGeneration(); }, this.config.update_interval);
 
 };
 
-GameOfLife.step = function() {
+Barryvanveen.GameOfLife.step = function() {
 
     clearInterval(this.interval);
     this.interval = null;
@@ -246,14 +249,14 @@ GameOfLife.step = function() {
 
 };
 
-GameOfLife.stop = function() {
+Barryvanveen.GameOfLife.stop = function() {
 
     clearInterval(this.interval);
     this.interval = null;
 
 };
 
-GameOfLife._computeNextGeneration = function() {
+Barryvanveen.GameOfLife._computeNextGeneration = function() {
 
     var count = 0,
         change = false,
@@ -334,6 +337,6 @@ GameOfLife._computeNextGeneration = function() {
 /**
  * Return a modulo that works for negative numbers (eg. -2%10=8)
  */
-GameOfLife._mod = function(n, m) {
+Barryvanveen.GameOfLife._mod = function(n, m) {
     return ((m % n) + n) % n;
 };
