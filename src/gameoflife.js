@@ -5,29 +5,37 @@
  * Released under the MIT license
  * http://choosealicense.com/licenses/mit/
  */
-var Barryvanveen = Barryvanveen || {};
 
-Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || function () {
+// todo: babel instellen https://www.npmjs.com/package/gulp-babel/
+// todo: modules maken voor gameoflife, helpers (getPosition, mod)
+// todo: boel importeren en namespacen
 
-    /*
-     * Methods
-     */
+class GameOfLife {
 
-    this.init = function(customConfig) {
+    constructor(customConfig) {
+        this._defaults = {
+            canvas_id:              "gameoflife_canvas",
+            num_cols:               80,
+            num_rows:               40,
+            cell_size:              10,
+            color_lines:            "#cccccc",
+            color_cell_empty:       "#ffffff",
+            color_cell_selected:    "#57A0DB",
+            update_interval:        50
+        };
+        this._interval = null;
 
-        this.initConfig(customConfig);
-        this.initCanvas();
-        this.initCells();
-        this.initEventListeners();
-
-        this.interval = null;
+        this._initConfig(customConfig);
+        this._initCanvas();
+        this._initCells();
+        this._initEventListeners();
     };
 
-    this.initConfig = function(customConfig) {
+    _initConfig(customConfig) {
 
         var i;
 
-        this.config = this.defaults;
+        this.config = this._defaults;
 
         if (typeof(customConfig) != "object") {
             return;
@@ -42,7 +50,7 @@ Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || function () {
 
     };
 
-    this.initCanvas = function() {
+    _initCanvas() {
 
         this.canvas = document.getElementById(this.config.canvas_id);
         console.log(this.canvas);
@@ -85,23 +93,7 @@ Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || function () {
 
     };
 
-    this.getPosition = function(element) {
-
-        var left = 0,
-            top = 0;
-
-        if (element.offsetParent) {
-            do {
-                left += element.offsetLeft;
-                top += element.offsetTop;
-            } while (element = element.offsetParent);
-        }
-
-        return [left, top];
-
-    };
-
-    this.initCells = function() {
+    _initCells() {
 
         // init two sets of cells:
         //   cells is the current state
@@ -126,7 +118,7 @@ Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || function () {
 
     };
 
-    this.initEventListeners = function() {
+    _initEventListeners() {
 
         var self = this;
 
@@ -134,32 +126,32 @@ Barryvanveen.GameOfLife = Barryvanveen.GameOfLife || function () {
         if (document.addEventListener) {
 
             this.canvas.addEventListener('click', function(e) {
-                self.handleClick(e);
+                self._handleClick(e);
             }, false);
 
         } else if (document.attachEvent) {
 
             this.canvas.attachEvent('click', function (e) {
-                self.handleClick(e);
+                self._handleClick(e);
             });
         }
 
     };
 
-    this.handleClick = function(e) {
+    _handleClick(e) {
 
-        var cell = this.getCellFromCursorPosition(e);
-console.log(cell);
+        var cell = this._getCellFromCursorPosition(e);
+
         if (cell == false) {
             return;
         }
 
         this.cells[cell[0]][cell[1]] = !this.cells[cell[0]][cell[1]];
-        this.drawCell(cell[0], cell[1]);
+        this._drawCell(cell[0], cell[1]);
 
     };
 
-    this.getCellFromCursorPosition = function(e) {
+    _getCellFromCursorPosition(e) {
 
         var left, top;
 
@@ -173,7 +165,7 @@ console.log(cell);
         }
 
         // get coordinates relative to canvas
-        var canvas_offset = this.getPosition(this.canvas);
+        var canvas_offset = GameOfLife.getPosition(this.canvas);
         left -= canvas_offset[0];
         top -= canvas_offset[1];
 
@@ -186,7 +178,7 @@ console.log(cell);
 
     };
 
-    this.drawCell = function(col, row) {
+    _drawCell(col, row) {
 
         if (this.cells[col][row]) {
             this.context.fillStyle = this.config.color_cell_selected;
@@ -200,45 +192,45 @@ console.log(cell);
 
     };
 
-    this.reset = function() {
+    reset() {
 
         this.stop();
 
-        this.initCells();
-        this.initCanvas();
+        this._initCells();
+        this._initCanvas();
 
     };
 
-    this.start = function() {
+    start() {
 
-        if (this.interval != null) {
+        if (this._interval != null) {
             return;
         }
 
         var self = this;
 
         // todo: replace with requestAnimationFrame?
-        this.interval = setInterval(function() { self.computeNextGeneration(); }, this.config.update_interval);
+        this._interval = setInterval(function() { self._computeNextGeneration(); }, this.config.update_interval);
 
     };
 
-    this.step = function() {
+    step() {
 
-        clearInterval(this.interval);
-        this.interval = null;
+        clearInterval(this._interval);
+        this._interval = null;
 
-        this.computeNextGeneration();
-
-    };
-
-    this.stop = function() {
-
-        clearInterval(this.interval);
-        this.interval = null;
+        this._computeNextGeneration();
 
     };
 
-    this.computeNextGeneration = function() {
+    stop() {
+
+        clearInterval(this._interval);
+        this._interval = null;
+
+    };
+
+    _computeNextGeneration() {
 
         var count = 0,
             change = false,
@@ -262,12 +254,12 @@ console.log(cell);
 
                         neighborCol = col + colOffset;
                         if (neighborCol < 0 || neighborCol >= this.config.num_cols) {
-                            neighborCol = this.mod(this.config.num_cols, neighborCol);
+                            neighborCol = GameOfLife.mod(this.config.num_cols, neighborCol);
                         }
 
                         neighborRow = row + rowOffset;
                         if (neighborRow < 0 || neighborRow >= this.config.num_rows) {
-                            neighborRow = this.mod(this.config.num_rows, neighborRow);
+                            neighborRow = GameOfLife.mod(this.config.num_rows, neighborRow);
                         }
 
                         // count neighbors that are "on" or "alive"
@@ -302,7 +294,7 @@ console.log(cell);
 
                     // todo: is "this.cells[col][row] = !this.cells[col][row];" faster??
                     this.cells[col][row] = this.newCells[col][row];
-                    this.drawCell(col, row);
+                    this._drawCell(col, row);
                     change = true;
 
                 }
@@ -316,24 +308,28 @@ console.log(cell);
 
     };
 
-    this.mod = function(n, m) {
+    /*
+     * Helpers
+     */
+
+    static getPosition(element) {
+
+        var left = 0,
+            top = 0;
+
+        if (element.offsetParent) {
+            do {
+                left += element.offsetLeft;
+                top += element.offsetTop;
+            } while (element = element.offsetParent);
+        }
+
+        return [left, top];
+
+    };
+
+    static mod(n, m) {
         return ((m % n) + n) % n;
     };
 
-    /*
-     * Variables
-     */
-
-    this.defaults = {
-
-        canvas_id:              "gameoflife_canvas",
-        num_cols:               80,
-        num_rows:               40,
-        cell_size:              10,
-        color_lines:            "#cccccc",
-        color_cell_empty:       "#ffffff",
-        color_cell_selected:    "#57A0DB",
-        update_interval:        50
-
-    };
-};
+}
