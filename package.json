@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/barryvanveen/gameoflife#readme",
   "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "gulp": "3.9.*",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "2.6.*",
     "gulp-plumber": "1.0.*",
     "gulp-rename": "1.2.*",

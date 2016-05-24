@@ -26,6 +26,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <h2>Example #1</h2>
             <canvas id="gameoflife_canvas">
                 <p class="notification text-danger">
                     <span class="notification__icon glyphicon glyphicon-warning-sign"></span>
@@ -58,6 +59,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <h2>Example #2</h2>
             <canvas id="gameoflife_canvas_small">
                 <p class="notification text-danger">
                     <span class="notification__icon glyphicon glyphicon-warning-sign"></span>
@@ -91,7 +93,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
-<script src="src/gameoflife.js"></script>
+<script src="dist/gameoflife.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -114,9 +116,9 @@
 
         var SmallGame = new GameOfLife({
             canvas_id:              "gameoflife_canvas_small",
-            num_cols:               40,
-            num_rows:               20,
-            cell_size:              10,
+            num_cols:               80,
+            num_rows:               40,
+            cell_size:              5,
             color_lines:            "#cccccc",
             color_cell_empty:       "#ffffff",
             color_cell_selected:    "#57A0DB",

@@ -1,5 +1,6 @@
-var gulp = require('gulp');
+var babel = require("gulp-babel");
 var concat = require('gulp-concat');
+var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var rename = require("gulp-rename");
 var sourcemaps = require('gulp-sourcemaps');
@@ -16,6 +17,7 @@ gulp.task('build-js', function () {
     gulp.src('src/*')
         .pipe(plumber({errorHandler: onError}))
         .pipe(sourcemaps.init())
+        .pipe(babel({presets: ['es2015']}))
         .pipe(uglify({preserveComments: 'licence'}))
         .pipe(concat('gameoflife.min.js'))
         .pipe(sourcemaps.write('./'))
