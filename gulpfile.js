@@ -21,10 +21,12 @@ var includePathOptions = {
  * concatenate and minify js files and write a sourcemap
  */
 gulp.task('build-js', function () {
-    gulp.src('src/example.js')
+    gulp.src('src/gameoflife.js')
         .pipe(plumber({errorHandler: onError}))
         .pipe(rollup({
             sourceMap: true,
+            format: 'iife',
+            moduleName: 'GameOfLife',
             plugins: [
                 rollupIncludePaths(includePathOptions)
             ]
