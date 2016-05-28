@@ -37,7 +37,6 @@
     "gulp-rollup": "^1.9.0",
     "gulp-sourcemaps": "1.6.*",
     "gulp-uglify": "1.5.*",
-    "gulp-util": "^3.0.7",
     "rollup-plugin-includepaths": "^0.1.5"
   }
 }

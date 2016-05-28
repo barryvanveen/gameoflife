@@ -7,7 +7,6 @@ var rollup = require('gulp-rollup');
 var rollupIncludePaths = require('rollup-plugin-includepaths');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
-var util = require('gulp-util');
 
 var onError = function (err) {
     console.log(err);
@@ -27,14 +26,16 @@ gulp.task('build-js', function () {
             sourceMap: true,
             format: 'iife',
             moduleName: 'GameOfLife',
+            banner: `//  GameOfLife JavaScript Plugin v1.0.0
+            //  https://github.com/barryvanveen/gameoflife
+            //
+            //  Released under the MIT license
+            //  http://choosealicense.com/licenses/mit/`,
             plugins: [
                 rollupIncludePaths(includePathOptions)
             ]
         }))
         .pipe(babel({presets: ['es2015']}))
-        // todo: minify
-        //.pipe(uglify({preserveComments: 'licence'}))
-        // todo: jslint?
         .pipe(rename('gameoflife.min.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist'));

@@ -1,11 +1,3 @@
-/*
- * GameOfLife JavaScript Plugin v1.0.0
- * https://github.com/barryvanveen/gameoflife
- *
- * Released under the MIT license
- * http://choosealicense.com/licenses/mit/
- */
-
 import State from './state';
 import Canvas from './canvas';
 
