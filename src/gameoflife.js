@@ -10,8 +10,8 @@ export default class GameOfLife {
             num_rows:               40,
             cell_size:              10,
             color_lines:            "#cccccc",
-            color_cell_empty:       "#ffffff",
-            color_cell_selected:    "#57A0DB",
+            color_cell_dead:        "#ffffff",
+            color_cell_alive:       "#57A0DB",
             update_interval:        50
         };
         this._interval = null;

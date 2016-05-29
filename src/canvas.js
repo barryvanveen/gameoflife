@@ -19,7 +19,7 @@ export default class Canvas {
             throw new Error("Canvas context could not be retrieved.");
         }
 
-        this.context.fillStyle = this.config.color_cell_selected;
+        this.context.fillStyle = this.config.color_cell_alive;
         this.context.strokeStyle = this.config.color_lines;
 
         this.canvas.width = (this.config.num_cols * this.config.cell_size) + 1;
@@ -111,9 +111,9 @@ export default class Canvas {
     _drawCell(col, row, cellState) {
 
         if (cellState) {
-            this.context.fillStyle = this.config.color_cell_selected;
+            this.context.fillStyle = this.config.color_cell_alive;
         } else {
-            this.context.fillStyle = this.config.color_cell_empty;
+            this.context.fillStyle = this.config.color_cell_dead;
         }
 
         // fill rectangle from (col-1,row-1) with width and height of cellSize-1
