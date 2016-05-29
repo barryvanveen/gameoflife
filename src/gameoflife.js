@@ -42,6 +42,23 @@ export default class GameOfLife {
 
     };
 
+    setState(cells) {
+
+        var i, cellState;
+
+        this.stop();
+
+        if (cells.length == 0) {
+            return;
+        }
+
+        for (i=0; i<cells.length; i++) {
+            cellState = this.state.changeCell(cells[i].col, cells[i].row);
+            this.canvas._drawCell(cells[i].col, cells[i].row, cellState);
+        }
+
+    }
+
     reset() {
 
         this.stop();

@@ -56,6 +56,25 @@
     </div>
 </div>
 
+<div class="container controls">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-primary game1_blinker" role="button">
+                Blinker
+            </button>
+            <button class="btn btn-primary game1_glider" role="button">
+                Glider
+            </button>
+            <button class="btn btn-primary game1_pentadecathlon" role="button">
+                Pentadecathlon
+            </button>
+            <button class="btn btn-primary game1_gostersGliderGun" role="button">
+                Gosper's glider gun
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
@@ -113,6 +132,82 @@
         $('.game1_stop').click(function() {BigGame.stop()});
         $('.game1_step').click(function() {BigGame.step()});
         $('.game1_reset').click(function() {BigGame.reset()});
+
+        $('.game1_blinker').click(function() {
+            BigGame.setState([
+                {col: 2, row: 1},
+                {col: 2, row: 2},
+                {col: 2, row: 3}
+            ]);
+        });
+
+        $('.game1_glider').click(function() {
+            BigGame.setState([
+                {col: 6, row: 3},
+                {col: 7, row: 1},
+                {col: 7, row: 3},
+                {col: 8, row: 2},
+                {col: 8, row: 3}
+            ]);
+        });
+
+        $('.game1_pentadecathlon').click(function() {
+            BigGame.setState([
+                {col: 23, row: 5},
+                {col: 23, row: 10},
+                {col: 24, row: 3},
+                {col: 24, row: 4},
+                {col: 24, row: 6},
+                {col: 24, row: 7},
+                {col: 24, row: 8},
+                {col: 24, row: 9},
+                {col: 24, row: 11},
+                {col: 24, row: 12},
+                {col: 25, row: 5},
+                {col: 25, row: 10}
+            ]);
+        });
+
+        $('.game1_gostersGliderGun').click(function() {
+            BigGame.setState([
+                {col: 1, row: 31},
+                {col: 1, row: 32},
+                {col: 2, row: 31},
+                {col: 2, row: 32},
+                {col: 11, row: 31},
+                {col: 11, row: 32},
+                {col: 11, row: 33},
+                {col: 12, row: 30},
+                {col: 12, row: 34},
+                {col: 13, row: 29},
+                {col: 13, row: 35},
+                {col: 14, row: 29},
+                {col: 14, row: 35},
+                {col: 15, row: 32},
+                {col: 16, row: 30},
+                {col: 16, row: 34},
+                {col: 17, row: 31},
+                {col: 17, row: 32},
+                {col: 17, row: 33},
+                {col: 18, row: 32},
+                {col: 21, row: 29},
+                {col: 21, row: 30},
+                {col: 21, row: 31},
+                {col: 22, row: 29},
+                {col: 22, row: 30},
+                {col: 22, row: 31},
+                {col: 23, row: 28},
+                {col: 23, row: 32},
+                {col: 25, row: 27},
+                {col: 25, row: 28},
+                {col: 25, row: 32},
+                {col: 25, row: 33},
+                {col: 35, row: 29},
+                {col: 35, row: 30},
+                {col: 36, row: 29},
+                {col: 36, row: 30}
+            ]);
+        });
 
         var SmallGame = new GameOfLife({
             canvas_id:              "gameoflife_canvas_small",
