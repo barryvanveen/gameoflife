@@ -64,6 +64,7 @@ Below is a list of options with the default values.
 * `color_lines` (String, "#cccccc") Color of the grid lines.
 * `color_cell_dead` (String, "#ffffff") Color of dead cells.
 * `color_cell_alive` (String, "#57A0DB") Color of live cells.
+* `update_interval` (Int, 50) Update interval in milliseconds.
 
 ## Licence
 This software is freely distributable under the terms of the [MIT license](LICENCE).

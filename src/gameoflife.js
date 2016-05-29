@@ -19,6 +19,7 @@ export default class GameOfLife {
         this.config = this._buildConfig(customConfig);
         this.state = new State(this.config);
         this.canvas = new Canvas(this.config, this.state);
+        this._setEventListeners();
     };
 
     _buildConfig(customConfig) {
@@ -39,6 +40,27 @@ export default class GameOfLife {
         }
 
         return config;
+
+    };
+
+    _setEventListeners() {
+
+        var self = this;
+
+        // todo: test fallback for <=IE10 with attachEvent
+        if (document.addEventListener) {
+
+            this.canvas.canvas.addEventListener('click', function(e) {
+                self.canvas._handleClick(e);
+            }, false);
+
+        } else if (document.attachEvent) {
+
+            this.canvas.canvas.attachEvent('click', function (e) {
+                self.canvas._handleClick(e);
+            });
+
+        }
 
     };
 
@@ -64,7 +86,7 @@ export default class GameOfLife {
         this.stop();
 
         this.state = new State(this.config);
-        this.canvas = new Canvas(this.config);
+        this.canvas = new Canvas(this.config, this.state);
 
     };
 
@@ -77,7 +99,6 @@ export default class GameOfLife {
         var self = this,
             i, cellState;
 
-        // todo: replace with requestAnimationFrame?
         this._interval = setInterval(function() {
             var changes = self.state.computeNextState();
 
@@ -98,8 +119,7 @@ export default class GameOfLife {
 
         var changes, cellState, i;
 
-        clearInterval(this._interval);
-        this._interval = null;
+        this.stop();
 
         changes = this.state.computeNextState();
 

@@ -43,28 +43,6 @@ export default class Canvas {
         // draw it
         this.context.stroke();
 
-        this._initEventListeners();
-
-    };
-
-    _initEventListeners() {
-
-        var self = this;
-
-        // todo: test fallback for <=IE10 with attachEvent
-        if (document.addEventListener) {
-
-            this.canvas.addEventListener('click', function(e) {
-                self._handleClick(e);
-            }, false);
-
-        } else if (document.attachEvent) {
-
-            this.canvas.attachEvent('click', function (e) {
-                self._handleClick(e);
-            });
-        }
-
     };
 
     _handleClick(e) {
