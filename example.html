@@ -40,6 +40,7 @@
 <div class="container controls">
     <div class="row">
         <div class="col-xs-12">
+            Controls:
             <button class="btn btn-primary game1_start" role="button">
                 <span class="glyphicon glyphicon-play"></span> Start
             </button>
@@ -54,22 +55,30 @@
             </button>
         </div>
     </div>
-</div>
 
-<div class="container controls">
     <div class="row">
         <div class="col-xs-12">
-            <button class="btn btn-primary game1_blinker" role="button">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Patterns:
+            <button class="btn btn-info game1_blinker" role="button">
                 Blinker
             </button>
-            <button class="btn btn-primary game1_glider" role="button">
+            <button class="btn btn-info game1_glider" role="button">
                 Glider
             </button>
-            <button class="btn btn-primary game1_pentadecathlon" role="button">
+            <button class="btn btn-info game1_pentadecathlon" role="button">
                 Pentadecathlon
             </button>
-            <button class="btn btn-primary game1_gostersGliderGun" role="button">
+            <button class="btn btn-info game1_gostersGliderGun" role="button">
                 Gosper's glider gun
+            </button>
+            <button class="btn btn-info game1_acorn" role="button">
+                Acorn
             </button>
         </div>
     </div>
@@ -206,6 +215,18 @@
                 {col: 35, row: 30},
                 {col: 36, row: 29},
                 {col: 36, row: 30}
+            ]);
+        });
+
+        $('.game1_acorn').click(function() {
+            BigGame.setState([
+                {col: 35, row: 22},
+                {col: 36, row: 20},
+                {col: 36, row: 22},
+                {col: 38, row: 21},
+                {col: 39, row: 22},
+                {col: 40, row: 22},
+                {col: 41, row: 22}
             ]);
         });
 

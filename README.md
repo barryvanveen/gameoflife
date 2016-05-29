@@ -66,5 +66,8 @@ Below is a list of options with the default values.
 * `color_cell_alive` (String, "#57A0DB") Color of live cells.
 * `update_interval` (Int, 50) Update interval in milliseconds.
 
+## Examples
+Take a look at the [example page](example.html).
+
 ## Licence
 This software is freely distributable under the terms of the [MIT license](LICENCE).
