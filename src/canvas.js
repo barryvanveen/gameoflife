@@ -19,14 +19,16 @@ export default class Canvas {
             throw new Error("Canvas context could not be retrieved.");
         }
 
-        this.context.fillStyle = this.config.color_cell_alive;
-        this.context.strokeStyle = this.config.color_lines;
-
         this.canvas.width = (this.config.num_cols * this.config.cell_size) + 1;
         this.canvas.height = (this.config.num_rows * this.config.cell_size) + 1;
 
         // clear the canvas
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // fill the background
+        this.context.fillStyle = this.config.color_cell_dead;
+        this.context.strokeStyle = this.config.color_lines;
+        this.context.fillRect(1, 1, this.canvas.width-1,  this.canvas.height-1);
 
         // vertical lines
         for (var x = 0; x <= this.canvas.width; x += this.config.cell_size) {

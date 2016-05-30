@@ -47,20 +47,9 @@ export default class GameOfLife {
 
         var self = this;
 
-        // todo: test fallback for <=IE10 with attachEvent
-        if (document.addEventListener) {
-
-            this.canvas.canvas.addEventListener('click', function(e) {
-                self.canvas._handleClick(e);
-            }, false);
-
-        } else if (document.attachEvent) {
-
-            this.canvas.canvas.attachEvent('click', function (e) {
-                self.canvas._handleClick(e);
-            });
-
-        }
+        this.canvas.canvas.addEventListener('click', function(e) {
+            self.canvas._handleClick(e);
+        }, false);
 
     };
 

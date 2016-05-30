@@ -13,6 +13,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -87,6 +92,14 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
             <h2>Example #2</h2>
             <canvas id="gameoflife_canvas_small">
                 <p class="notification text-danger">
@@ -117,12 +130,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
 <script src="dist/gameoflife.min.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -235,9 +243,9 @@
             num_cols:               80,
             num_rows:               40,
             cell_size:              5,
-            color_lines:            "#cccccc",
-            color_cell_dead:       "#ffffff",
-            color_cell_alive:    "#57A0DB",
+            color_lines:            "#ff0000",
+            color_cell_dead:        "#ffff00",
+            color_cell_alive:       "#000000",
             update_interval:        50
         });
 

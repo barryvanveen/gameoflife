@@ -2,8 +2,9 @@
 A Javascript implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 >v1.0.0
 
-* Implemented with ES6 Javascript and html5 canvas element.
-* Possible to run multiple implementations on one page.
+* Implemented with ES6 Javascript and HTML5 <canvas> element.
+* No dependencies, except for [canvas support](http://caniuse.com/#feat=canvas).
+* It's possible to run multiple instances on the same page.
 * Set an arbitrary state using the setState() method.
 
 ## Installation
