@@ -13,6 +13,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -26,6 +31,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <h2>Example #1</h2>
             <canvas id="gameoflife_canvas">
                 <p class="notification text-danger">
                     <span class="notification__icon glyphicon glyphicon-warning-sign"></span>
@@ -38,33 +44,215 @@
 
 <div class="container controls">
     <div class="row">
-        <div class="col-xs-7">
-            <button class="btn btn-primary" role="button" onclick="GameOfLife.start();">
+        <div class="col-xs-12">
+            Controls:
+            <button class="btn btn-primary game1_start" role="button">
                 <span class="glyphicon glyphicon-play"></span> Start
             </button>
-            <button class="btn btn-primary" role="button" onclick="GameOfLife.stop();">
+            <button class="btn btn-primary game1_stop" role="button">
                 <span class="glyphicon glyphicon-stop"></span> Stop
             </button>
-            <button class="btn btn-primary" role="button" onclick="GameOfLife.step();">
+            <button class="btn btn-primary game1_step" role="button">
                 <span class="glyphicon glyphicon-step-forward"></span> Step
             </button>
-            <button class="btn btn-primary" role="button" onclick="GameOfLife.reset();">
+            <button class="btn btn-primary game1_reset" role="button">
+                <span class="glyphicon glyphicon-remove"></span> Reset
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Patterns:
+            <button class="btn btn-info game1_blinker" role="button">
+                Blinker
+            </button>
+            <button class="btn btn-info game1_glider" role="button">
+                Glider
+            </button>
+            <button class="btn btn-info game1_pentadecathlon" role="button">
+                Pentadecathlon
+            </button>
+            <button class="btn btn-info game1_gostersGliderGun" role="button">
+                Gosper's glider gun
+            </button>
+            <button class="btn btn-info game1_acorn" role="button">
+                Acorn
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Example #2</h2>
+            <canvas id="gameoflife_canvas_small">
+                <p class="notification text-danger">
+                    <span class="notification__icon glyphicon glyphicon-warning-sign"></span>
+                    Sorry, your browser cannot display this content. Try updating your browser or <a href="http://web-browsers.findthebest.com/" target="_blank">use a different browser</a>.
+                </p>
+            </canvas>
+        </div>
+    </div>
+</div>
+
+<div class="container controls">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-primary game2_start" role="button">
+                <span class="glyphicon glyphicon-play"></span> Start
+            </button>
+            <button class="btn btn-primary game2_stop" role="button">
+                <span class="glyphicon glyphicon-stop"></span> Stop
+            </button>
+            <button class="btn btn-primary game2_step" role="button">
+                <span class="glyphicon glyphicon-step-forward"></span> Step
+            </button>
+            <button class="btn btn-primary game2_reset" role="button">
                 <span class="glyphicon glyphicon-remove"></span> Reset
             </button>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
-<script src="src/gameoflife.js"></script>
-
+<script src="dist/gameoflife.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        GameOfLife.init({
+
+        var BigGame = new GameOfLife({
+            canvas_id:              "gameoflife_canvas",
+            num_cols:               80,
+            num_rows:               40,
+            cell_size:              10,
+            color_lines:            "#cccccc",
+            color_cell_dead:        "#ffffff",
+            color_cell_alive:       "#57A0DB",
+            update_interval:        50
         });
+
+        $('.game1_start').click(function() {BigGame.start()});
+        $('.game1_stop').click(function() {BigGame.stop()});
+        $('.game1_step').click(function() {BigGame.step()});
+        $('.game1_reset').click(function() {BigGame.reset()});
+
+        $('.game1_blinker').click(function() {
+            BigGame.setState([
+                {col: 2, row: 1},
+                {col: 2, row: 2},
+                {col: 2, row: 3}
+            ]);
+        });
+
+        $('.game1_glider').click(function() {
+            BigGame.setState([
+                {col: 6, row: 3},
+                {col: 7, row: 1},
+                {col: 7, row: 3},
+                {col: 8, row: 2},
+                {col: 8, row: 3}
+            ]);
+        });
+
+        $('.game1_pentadecathlon').click(function() {
+            BigGame.setState([
+                {col: 23, row: 5},
+                {col: 23, row: 10},
+                {col: 24, row: 3},
+                {col: 24, row: 4},
+                {col: 24, row: 6},
+                {col: 24, row: 7},
+                {col: 24, row: 8},
+                {col: 24, row: 9},
+                {col: 24, row: 11},
+                {col: 24, row: 12},
+                {col: 25, row: 5},
+                {col: 25, row: 10}
+            ]);
+        });
+
+        $('.game1_gostersGliderGun').click(function() {
+            BigGame.setState([
+                {col: 1, row: 31},
+                {col: 1, row: 32},
+                {col: 2, row: 31},
+                {col: 2, row: 32},
+                {col: 11, row: 31},
+                {col: 11, row: 32},
+                {col: 11, row: 33},
+                {col: 12, row: 30},
+                {col: 12, row: 34},
+                {col: 13, row: 29},
+                {col: 13, row: 35},
+                {col: 14, row: 29},
+                {col: 14, row: 35},
+                {col: 15, row: 32},
+                {col: 16, row: 30},
+                {col: 16, row: 34},
+                {col: 17, row: 31},
+                {col: 17, row: 32},
+                {col: 17, row: 33},
+                {col: 18, row: 32},
+                {col: 21, row: 29},
+                {col: 21, row: 30},
+                {col: 21, row: 31},
+                {col: 22, row: 29},
+                {col: 22, row: 30},
+                {col: 22, row: 31},
+                {col: 23, row: 28},
+                {col: 23, row: 32},
+                {col: 25, row: 27},
+                {col: 25, row: 28},
+                {col: 25, row: 32},
+                {col: 25, row: 33},
+                {col: 35, row: 29},
+                {col: 35, row: 30},
+                {col: 36, row: 29},
+                {col: 36, row: 30}
+            ]);
+        });
+
+        $('.game1_acorn').click(function() {
+            BigGame.setState([
+                {col: 35, row: 22},
+                {col: 36, row: 20},
+                {col: 36, row: 22},
+                {col: 38, row: 21},
+                {col: 39, row: 22},
+                {col: 40, row: 22},
+                {col: 41, row: 22}
+            ]);
+        });
+
+        var SmallGame = new GameOfLife({
+            canvas_id:              "gameoflife_canvas_small",
+            num_cols:               80,
+            num_rows:               40,
+            cell_size:              5,
+            color_lines:            "#ff0000",
+            color_cell_dead:        "#ffff00",
+            color_cell_alive:       "#000000",
+            update_interval:        50
+        });
+
+        $('.game2_start').click(function() {SmallGame.start()});
+        $('.game2_stop').click(function() {SmallGame.stop()});
+        $('.game2_step').click(function() {SmallGame.step()});
+        $('.game2_reset').click(function() {SmallGame.reset()});
     });
 </script>
 

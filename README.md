@@ -1,34 +1,74 @@
 # Game of Life
-This is a Javascript implementation of Conway's Game of Life.
+A Javascript implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+>v1.0.0
+
+* Implemented with ES6 Javascript and HTML5 <canvas> element.
+* No dependencies, except for [canvas support](http://caniuse.com/#feat=canvas).
+* It's possible to run multiple instances on the same page.
+* Set an arbitrary state using the setState() method.
 
 ## Installation
-1. `bower install --save gameoflife` or download `/dist/gameoflife.min.js`.
-2. include the following in your html file, just before closing the body tag:
+1. `bower install --save-dev gameoflife` or download `/dist/gameoflife.min.js`.
+2. Add a canvas-element to your html with an ID of your choice.  
+3. Include the following Javascript in your html file, just before closing the body tag:
  ```
     <script src="src/gameoflife.js"></script>
     <script type="text/javascript">
-        GameOfLife.init({
-        });
+        var myGameOfLife = new GameOfLife();
     </script>
 ``` 
+4. Add some buttons to control the game. See our [example page](http://htmlpreview.github.io/?https://github.com/barryvanveen/gameoflife/blob/master/example.html) and check out the Usage section below.
+
+>If you are using ES6 you can also import the GameOfLife class from /src/gameoflife.js
 
 ## Usage
-### init
+Initialise a new instance using `var myGame = new GameOfLife();`. Override default parameters using `var myCustomGame
+ = new GameOfLife({canvas_id: "myCustomID", num_cols: 123})`.
+ 
+Click on cells in the grid to change their state. You can also set the state with the setState() method. Once your 
+finished providing the initial state, call the start() method. 
+ 
+###setState(cells)
 
-* start
-* step
-* stop
-* reset
+Provide an array of cells. Each cell is an object consisting of the column and row, eg. `{col: 1, row: 2}`. The state
+ of each cell is changed but no further checks are made. 
+ 
+Example of adding a [Blinker](http://www.conwaylife.com/wiki/Blinker) pattern to an empty state:
+```
+MyGame.setState([
+    {col: 1, row: 0},
+    {col: 1, row: 1},
+    {col: 1, row: 2}
+]);
+```
 
-## Options
-canvas_id:              "gameoflife_canvas",
-num_cols:               80,
-num_rows:               40,
-cell_size:              10,
-color_lines:            "#cccccc",
-color_cell_empty:       "#ffffff",
-color_cell_selected:    "#57A0DB",
-update_interval:        50
+### start()
+Starts iterating of states of the game. The game stops automatically if the game ends up in dead state, ie. no 
+changes are made by further iterations. 
+
+### step()
+Compute the next state of the population. If the game is currently running it is stopped after this iteration. 
+
+### stop()
+Stop the game from iterating any further.
+
+### reset()
+Reset to an empty state. If the game is currently running it is stopped.
+
+## Configuration
+Below is a list of options with the default values.
+
+* `canvas_id` (String, "gameoflife_canvas") ID that identifies the canvas element. 
+* `num_cols` (Int, 80) Number of columns in the grid.  
+* `num_rows` (Int, 40) Number of rows in the grid.
+* `cell_size` (Int, 10) Size of each cell, in pixels.
+* `color_lines` (String, "#cccccc") Color of the grid lines.
+* `color_cell_dead` (String, "#ffffff") Color of dead cells.
+* `color_cell_alive` (String, "#57A0DB") Color of live cells.
+* `update_interval` (Int, 50) Update interval in milliseconds.
+
+## Examples
+Take a look at the [example page](http://htmlpreview.github.io/?https://github.com/barryvanveen/gameoflife/blob/master/example.html).
 
 ## Licence
 This software is freely distributable under the terms of the [MIT license](LICENCE).

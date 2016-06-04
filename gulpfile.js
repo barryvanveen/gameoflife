@@ -1,7 +1,10 @@
-var gulp = require('gulp');
+var babel = require("gulp-babel");
 var concat = require('gulp-concat');
+var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var rename = require("gulp-rename");
+var rollup = require('gulp-rollup');
+var rollupIncludePaths = require('rollup-plugin-includepaths');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
@@ -9,16 +12,32 @@ var onError = function (err) {
     console.log(err);
 };
 
+var includePathOptions = {
+    paths: ['src']
+};
+
 /**
  * concatenate and minify js files and write a sourcemap
  */
 gulp.task('build-js', function () {
-    gulp.src('src/*')
+    gulp.src('src/gameoflife.js')
         .pipe(plumber({errorHandler: onError}))
-        .pipe(sourcemaps.init())
-        .pipe(uglify({preserveComments: 'licence'}))
-        .pipe(concat('gameoflife.min.js'))
-        .pipe(sourcemaps.write('./'))
+        .pipe(rollup({
+            sourceMap: true,
+            format: 'iife',
+            moduleName: 'GameOfLife',
+            banner: `//  GameOfLife JavaScript Plugin v1.0.0
+            //  https://github.com/barryvanveen/gameoflife
+            //
+            //  Released under the MIT license
+            //  http://choosealicense.com/licenses/mit/`,
+            plugins: [
+                rollupIncludePaths(includePathOptions)
+            ]
+        }))
+        .pipe(babel({presets: ['es2015']}))
+        .pipe(rename('gameoflife.min.js'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist'));
 });
 
