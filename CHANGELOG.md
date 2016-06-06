@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### Fixed
 
+## [1.0.3] - 2016-06-06
+### Fixed
+- The _buildConfig method now always returns a config object 
+
 ## [1.0.2] - 2016-06-06
 ### Added
 - Added npm installation command to readme  
