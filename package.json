@@ -1,5 +1,5 @@
 {
-  "name": "gameoflife",
+  "name": "gameoflife-es6",
   "version": "1.0.1",
   "description": "Conway's Game of Life Javscript plugin",
   "main": "dist/gameoflife.min.js",

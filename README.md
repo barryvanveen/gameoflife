@@ -8,7 +8,7 @@ A Javascript implementation of [Conway's Game of Life](https://en.wikipedia.org/
 * Set an arbitrary state using the setState() method.
 
 ## Installation
-1. `bower install --save-dev gameoflife` or download `/dist/gameoflife.min.js`.
+1. `bower install --save-dev gameoflife`, `npm install --save-dev gameoflife-es6` or download `/dist/gameoflife.min.js`.
 2. Add a canvas-element to your html with an ID of your choice.  
 3. Include the following Javascript in your html file, just before closing the body tag:
  ```
