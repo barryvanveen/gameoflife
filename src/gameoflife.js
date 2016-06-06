@@ -29,7 +29,7 @@ export default class GameOfLife {
         var config = this._defaults;
 
         if (typeof(customConfig) != "object") {
-            return;
+            return config;
         }
 
         for (i in customConfig) {
