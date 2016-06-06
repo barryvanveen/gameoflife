@@ -26,7 +26,7 @@ gulp.task('build-js', function () {
             sourceMap: true,
             format: 'iife',
             moduleName: 'GameOfLife',
-            banner: `//  GameOfLife JavaScript Plugin v1.0.2
+            banner: `//  GameOfLife JavaScript Plugin v1.0.3
             //  https://github.com/barryvanveen/gameoflife
             //
             //  Released under the MIT license
