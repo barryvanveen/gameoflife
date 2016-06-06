@@ -8,7 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Deprecated
 ### Removed
 ### Fixed
-- Fixed bower.json so that this project is not marked as private
+
+## [1.0.2] - 2016-06-06
+### Added
+- Added npm installation command to readme  
+### Changed
+- Changed npm package name to "gameoflife-es6"
 
 ## [1.0.1] - 2016-06-04
 ### Fixed
