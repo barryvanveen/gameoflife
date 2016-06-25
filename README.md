@@ -1,6 +1,6 @@
 # Game of Life
 A Javascript implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
->v1.0.3
+>v1.1.0
 
 * Implemented with ES6 Javascript and HTML5 <canvas> element.
 * No dependencies, except for [canvas support](http://caniuse.com/#feat=canvas).

@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### Fixed
 
+## [1.1.0] - 2016-06-25
+### Changed
+- Changed gulp workflow for rollup integration
+
 ## [1.0.3] - 2016-06-06
 ### Fixed
 - The _buildConfig method now always returns a config object 
