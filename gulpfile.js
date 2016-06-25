@@ -1,43 +1,51 @@
 var babel = require("gulp-babel");
-var concat = require('gulp-concat');
 var gulp = require('gulp');
-var plumber = require('gulp-plumber');
 var rename = require("gulp-rename");
-var rollup = require('gulp-rollup');
-var rollupIncludePaths = require('rollup-plugin-includepaths');
+var rollup = require('rollup-stream');
 var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-
-var onError = function (err) {
-    console.log(err);
-};
-
-var includePathOptions = {
-    paths: ['src']
-};
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 
 /**
  * concatenate and minify js files and write a sourcemap
  */
 gulp.task('build-js', function () {
-    gulp.src('src/gameoflife.js')
-        .pipe(plumber({errorHandler: onError}))
-        .pipe(rollup({
+    rollup({
+            entry: './src/gameoflife.js',
             sourceMap: true,
             format: 'iife',
             moduleName: 'GameOfLife',
             banner: `//  GameOfLife JavaScript Plugin v1.0.3
-            //  https://github.com/barryvanveen/gameoflife
-            //
-            //  Released under the MIT license
-            //  http://choosealicense.com/licenses/mit/`,
-            plugins: [
-                rollupIncludePaths(includePathOptions)
-            ]
-        }))
+//  https://github.com/barryvanveen/gameoflife
+//
+//  Released under the MIT license
+//  http://choosealicense.com/licenses/mit/`
+        })
+
+        // print errors to console, this makes sure Gulp can keep watching and running
+        .on('error', e => {
+            console.error(`${e.stack}`);
+        })
+
+        // point to the entry file
+        .pipe(source('gameoflife.js', './src'))
+
+        // buffer the output, needed for gulp-sourcemaps
+        .pipe(buffer())
+
+        // tell gulp-sourcemaps to load the inline sourcemap produced by rollup-stream
+        .pipe(sourcemaps.init({loadMaps: true}))
+
+        // compile es2015 into plain javascript
         .pipe(babel({presets: ['es2015']}))
+
+        // rename output file
         .pipe(rename('gameoflife.min.js'))
+
+        // write source map
         .pipe(sourcemaps.write('.'))
+
+        // output to /dist
         .pipe(gulp.dest('dist'));
 });
 
