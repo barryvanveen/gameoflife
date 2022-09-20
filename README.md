@@ -17,7 +17,7 @@ A Javascript implementation of [Conway's Game of Life](https://en.wikipedia.org/
         var myGameOfLife = new GameOfLife();
     </script>
 ``` 
-4. Add some buttons to control the game. See our [example page](http://htmlpreview.github.io/?https://github.com/barryvanveen/gameoflife/blob/master/example.html) and check out the Usage section below.
+4. Add some buttons to control the game. See our [example page](https://barryvanveen.github.io/gameoflife/) and check out the Usage section below.
 
 >If you are using ES6 you can also import the GameOfLife class from /src/gameoflife.js
 
@@ -68,7 +68,7 @@ Below is a list of options with the default values.
 * `update_interval` (Int, 50) Update interval in milliseconds.
 
 ## Examples
-Take a look at the [example page](http://htmlpreview.github.io/?https://github.com/barryvanveen/gameoflife/blob/master/example.html).
+Take a look at the [example page](https://barryvanveen.github.io/gameoflife/).
 
 ## Licence
 This software is freely distributable under the terms of the [MIT license](LICENCE).
